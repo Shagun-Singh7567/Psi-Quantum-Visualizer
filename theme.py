@@ -54,8 +54,12 @@ class Color:
 # ── Font ──────────────────────────────────────────────────────────────────────
 
 class Font:
-    MONO   = "IBM Plex Mono, monospace"
-    IMPORT = "https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&display=swap"
+    BODY   = "Nunito, sans-serif"
+    MONO   = "IBM Plex Mono, monospace"   # kept for metric values and orbital labels
+    IMPORT = (
+        "https://fonts.googleapis.com/css2?"
+        "family=Nunito:wght@400;600;700&family=IBM+Plex+Mono:wght@400;700&display=swap"
+    )
 
 
 # ── Plotly layout template ────────────────────────────────────────────────────
@@ -65,14 +69,14 @@ def h_layout(title: str = "", dark: bool = False) -> dict:
     return dict(
         title=dict(
             text=title,
-            font=dict(family=Font.MONO, size=13, color=Color.TEXT_BODY),
+            font=dict(family=Font.BODY, size=13, color=Color.TEXT_BODY),
         ),
-        font=dict(family=Font.MONO, size=12, color=Color.TEXT_BODY),
+        font=dict(family=Font.BODY, size=12, color=Color.TEXT_BODY),
         paper_bgcolor=Color.BG_DARK if dark else Color.BG_SURFACE,
         plot_bgcolor=Color.BG_SURFACE,
         margin=dict(l=48, r=24, t=44, b=44),
         legend=dict(
-            font=dict(family=Font.MONO, size=10, color=Color.TEXT_MUTED),
+            font=dict(family=Font.BODY, size=10, color=Color.TEXT_MUTED),
             bgcolor="rgba(0,0,0,0)",
             borderwidth=0,
         ),
@@ -83,7 +87,8 @@ def h_layout(title: str = "", dark: bool = False) -> dict:
 
 def _build_css() -> str:
     c = Color
-    f = Font.MONO
+    f = Font.BODY
+    mono = Font.MONO
 
     return (
         '<link href="' + Font.IMPORT + '" rel="stylesheet">\n'
@@ -156,7 +161,7 @@ def _build_css() -> str:
 
         # ── Orbital name badge ────────────────────────────────────────────────
         ".orbital-name {"
-        "  font-family: " + f + ";"
+        "  font-family: " + mono + ";"
         "  font-size: 0.88rem;"
         "  color: " + c.PRIMARY + ";"
         "  background: " + c.PRIMARY_GLOW + ";"
@@ -203,6 +208,7 @@ def _build_css() -> str:
         ".metric-val {"
         "  font-size: 1.6rem;"
         "  font-weight: 700;"
+        "  font-family: " + mono + ";"
         "  color: " + c.TEXT_BRIGHT + ";"
         "  line-height: 1.1;"
         "}\n"
@@ -223,14 +229,14 @@ def _build_css() -> str:
         "  font-size: 0.7rem;"
         "  color: " + c.TEXT_MUTED + ";"
         "  line-height: 1.7;"
-        "  font-family: " + f + ";"
+        "  font-family: " + mono + ";"
         "}\n"
 
         # ── Orbital table ─────────────────────────────────────────────────────
         ".otbl {"
         "  width: 100%;"
         "  border-collapse: collapse;"
-        "  font-family: " + f + ";"
+        "  font-family: " + mono + ";"
         "  font-size: 0.72rem;"
         "  margin-bottom: 10px;"
         "}\n"
@@ -277,7 +283,49 @@ def _build_css() -> str:
         "hr { border-color: " + c.BORDER + "; }\n"
 
         # ── Radio + toggle labels ─────────────────────────────────────────────
-        ".stRadio label, .stCheckbox label {"
+        # ── Radio buttons — pill style ────────────────────────────────────
+        # Hide the native dot indicator
+        ".stRadio [data-testid='stMarkdownContainer'] p {"
+        "  font-family: " + f + ";"
+        "  font-size: 0.82rem;"
+        "}\n"
+
+        ".stRadio > div {"
+        "  gap: 6px !important;"
+        "}\n"
+
+        # Each radio option wrapper
+        ".stRadio label {"
+        "  background: " + c.BG_CARD + " !important;"
+        "  border: 1px solid " + c.BORDER + " !important;"
+        "  border-radius: 6px !important;"
+        "  padding: 4px 14px !important;"
+        "  font-family: " + f + " !important;"
+        "  font-size: 0.82rem !important;"
+        "  color: " + c.TEXT_MUTED + " !important;"
+        "  cursor: pointer !important;"
+        "  transition: all 0.15s ease !important;"
+        "}\n"
+
+        # Hide the dot circle entirely
+        ".stRadio label > div:first-child {"
+        "  display: none !important;"
+        "}\n"
+
+        # Checked state — teal pill
+        ".stRadio label[data-checked='true'] {"
+        "  background: " + c.PRIMARY_GLOW + " !important;"
+        "  border-color: " + c.PRIMARY + " !important;"
+        "  color: " + c.PRIMARY + " !important;"
+        "}\n"
+
+        # Hover on unselected
+        ".stRadio label:hover {"
+        "  border-color: " + c.PRIMARY_DIM + " !important;"
+        "  color: " + c.TEXT_BODY + " !important;"
+        "}\n"
+
+        ".stCheckbox label {"
         "  color: " + c.TEXT_BODY + " !important;"
         "  font-family: " + f + ";"
         "}\n"
