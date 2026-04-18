@@ -51,6 +51,20 @@ plotly>=5.20.0
 
 ---
 
+## Screenshots
+![1s orbital - Radial and Angular nodes](/assets/1sm0_1.png)
+![1s orbital - Probability graphs](/assets/1sm0_2.png)
+![1s orbital - 3D Visual](/assets/1sm0_3.png)
+![2p orbital - Radial and Angular nodes](/assets/2pm0_1.png)
+![2p orbital - Probability graphs](/assets/2pm0_2.png)
+![2p orbital - 3D Visual](/assets/2pm0_3.png)
+![3d orbital - Radial and Angular nodes](/assets/3dm0_1.png)
+![3d orbital - Probability graphs](/assets/3dm0_2.png)
+![3d orbital - 3D Visual](/assets/3dm0_3.png)k
+
+
+---
+
 ## The Chemistry
 
 The hydrogen atom is the only atom quantum mechanics can solve exactly — one proton, one electron, no approximations needed. The solution is the wavefunction ψ, a function of position that encodes everything physically knowable about the electron. The wavefunction itself isn't directly observable, but its square is: $ψ^2$ at any point in space gives the **probability density** of finding the electron there. This smeared-out cloud of probability is what chemists call an orbital.
